@@ -1,0 +1,37 @@
+#input topic info, (yaw,pitch,roll in degree/ x,y,z in meter)
+CloudIn1:
+  topic_name: /vlp1/points_raw
+  pose_yaw: 0
+  pose_pitch: 30
+  pose_roll: 0
+  pose_x: 0.8
+  pose_y: 0
+  pose_z: 0
+CloudIn2:
+  topic_name: /vlp2/points_raw
+  pose_yaw: 0
+  pose_pitch: -30
+  pose_roll: 0
+  pose_x: -0.8
+  pose_y: 0
+  pose_z: 0
+CloudIn3:
+  topic_name: /vlp3/points_raw
+  pose_yaw: 0
+  pose_pitch: 0
+  pose_roll: -30
+  pose_x: 0
+  pose_y: 0.8
+  pose_z: 0
+CloudIn4:
+  topic_name: /vlp4/points_raw
+  pose_yaw: 0
+  pose_pitch: 0
+  pose_roll: 30
+  pose_x: 0
+  pose_y: -0.8
+  pose_z: 0
+#output topic info (frame_id for virtual frame)
+CloudOut:
+  topic_name: points_raw
+  frame_id: velodyne
