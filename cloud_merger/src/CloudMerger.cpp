@@ -16,32 +16,12 @@ InputCloud::InputCloud(pose p,std::string topic,ros::NodeHandle nh)
 void InputCloud::cloudCallback(const sensor_msgs::PointCloud2ConstPtr& input)
 {
 	pcl::fromROSMsg(*input,this->inCloud);
-	//std::cout<< inCloud.is_dense<<std::endl;
-	//std::cout<< inCloud.sensor_orientation_.y<<std::endl;
 	pcl::transformPointCloud(this->inCloud,this->tfdinCloud,transform);
 }
 
 Eigen::Matrix4f InputCloud::poseTotfmatrix()
 {
 	Eigen::Matrix4f tfMatrix = Eigen::Matrix4f::Identity();
-	/* method1 
-	 * tfMatrix(0,0) ~ tfMatrix(2,2) rotation
-	 * tfMatrix(3,0) ~ tfMatrix(3,2) translation
-	 
-	tfMatrix(0,0) = cos(pt[num].yaw)*cos(pt[num].pitch);
-	tfMatrix(0,1) = cos(pt[num].yaw)*sin(pt[num].pitch)*sin(pt[num].roll) - sin(pt[num].yaw)*cos(pt[num].roll);
-	tfMatrix(0,2) = cos(pt[num].yaw)*sin(pt[num].pitch)*cos(pt[num].roll) + sin(pt[num].yaw)*sin(pt[num].roll);
-	tfMatrix(1,0) = sin(pt[num].yaw)*cos(pt[num].pitch);
-	tfMatrix(1,1) = sin(pt[num].yaw)*sin(pt[num].pitch)*sin(pt[num].roll) + cos(pt[num].yaw)*cos(pt[num].roll);
-	tfMatrix(1,2) = sin(pt[num].yaw)*sin(pt[num].pitch)*cos(pt[num].roll) - cos(pt[num].yaw)*sin(pt[num].roll);
-	tfMatrix(2,0) = -sin(pt[num].pitch);
-	tfMatrix(2,1) = cos(pt[num].pitch)*sin(pt[num].roll);
-	tfMatrix(2,2) = cos(pt[num].pitch)*cos(pt[num].roll);
-
-	*/
-
-	/*method2 
-	*/ 
 	Eigen::AngleAxisd rollAngle(this->ps.roll,Eigen::Vector3d::UnitX());
 	Eigen::AngleAxisd pitchAngle(this->ps.pitch,Eigen::Vector3d::UnitY());
 	Eigen::AngleAxisd yawAngle(this->ps.yaw,Eigen::Vector3d::UnitZ());
@@ -73,7 +53,6 @@ OutputCloud::OutputCloud(std::string topic,std::string frame,ros::NodeHandle nh)
 	this->frame_id = frame;
 	pub = nh.advertise<sensor_msgs::PointCloud2>(this->topic_name,1);
 	this->outCloud.header.frame_id = this->frame_id;
-	//std::cout << outCloud.is_dense << std::endl;
 }
 
 //OutputCloud member function end
@@ -154,11 +133,7 @@ void CloudMerger::mergeNpub()
 	 * Is it ok?
 	 */
 	outCl->outCloud.clear(); //clear before use. Header info is not cleared.
-	//std::cout << outCl->outCloud.width <<std::endl;
-	//std::cout << outCl->outCloud.header.frame_id <<std::endl;
 	for(int i = 0 ; i < this->nsensors ; i++){
-		//std::cout << "Cloud " << i+1  << " ";
-		//std::cout << inClAry[i]->tfdinCloud.header.stamp << std::endl;
 		outCl->outCloud += inClAry[i]->tfdinCloud;
 	}
 	//initialize header info with first Cloud info
