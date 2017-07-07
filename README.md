@@ -14,7 +14,7 @@ Usage :
   To do this, you might have to know exact location of the sensors from your robot.
   
   2. Make virtual sensor. I I used static_transform_publisher in launch/Starter.launch. This virtual sensor will be used instead of
-  your multiple sensors. Register this virtual sensor information to config/Clouds.yaml.(CloudOut)
+     your multiple sensors. Register this virtual sensor information to config/Clouds.yaml.(CloudOut)
   
   3. That's it! Just launch launch/Starter.launch and see if your pointCloud datas are merged.
   
