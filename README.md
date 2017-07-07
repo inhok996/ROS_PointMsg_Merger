@@ -6,6 +6,8 @@ If you want to use multiple sensors as if only one sensor exists, this package i
 Since this package works for only locationally fixed sensors, You must know where your sensors are located on your robot.(base_link)
 
 Install: download or clone this package to your catkin workspace and just do catkin_make.
+
+
 Usage :
   1. Since You may have your sensor drivers like velodyne_driver to collect data through sensor_msg::PointCloud2 topics,
   what you have to do fist is that you register your sensor infos to config/Clouds.yaml.(CloudIn1~, in order,minimum: 1,maximum: 8)
